@@ -17,12 +17,13 @@ import java.util.List;
  */
 public interface UserRepository extends JpaRepository<User,Integer>, JpaSpecificationExecutor<User> {
     User findByEmail(String Email);
-
+    void deleteByEmailAndAndLastName(String Email,String LastName);
     @Modifying
     @Query("update User set lastName=:lastName where id=:id")
     int updateLastNameByid(@Param("id") Integer id,@Param("lastName") String lastName);
 
     List<User> findByLastNameAndEmailNotNullOrderByIdAsc(String LastName);
+
 
 
 }

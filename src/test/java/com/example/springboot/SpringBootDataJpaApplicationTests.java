@@ -4,6 +4,7 @@ import com.example.springboot.entity.User;
 import com.example.springboot.service.UserService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.validator.constraints.br.TituloEleitoral;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,9 +54,29 @@ public class SpringBootDataJpaApplicationTests {
         System.out.println(user);
     }
     @Test
+    public void updateUser(){
+        User user= userService.findOne(4);
+        user.setLastName("gouye");
+        User result = userService.updateUser(user);
+        System.out.println(result);
+    }
+    @Test
     public void updateLastNameByid(){
         int count = userService.updateLastNameByid(5,"tanghaoyu");
         System.out.println(count);
+    }
+    @Test
+    public void insertUser(){
+        User user= new User();
+        user.setEmail("cc");
+        user.setLastName("huohua");
+        User result = userService.updateUser(user);
+        System.out.println(result);
+    }
+    @Test
+    public void deleteByEmailAndLastName(){
+        userService.deleteByEmailAndLastName("ff","ff");
+
     }
     @Test
     public void findByLastNameAndEmailNotNullOrderByIdDesc(){
@@ -74,7 +95,7 @@ public class SpringBootDataJpaApplicationTests {
     @Test
     public void page(){
         String map = "{\"page\" : 1,\"pageSize\" : 2," +
-                " \"filter\":{ \"filters\":[{ \"field\" : \"email\", \"value\":\"aa\"},{\"field\" :\"lastName\",\"value\":\"yy\" }]}}";
+                " \"filter\":{ \"filters\":[{ \"field\" : \"email\", \"value\":\"aa\"}]}}";
         Map searchParameters = new HashMap();
         try {
             searchParameters =objectMapper.readValue(map,new TypeReference<Map>(){});

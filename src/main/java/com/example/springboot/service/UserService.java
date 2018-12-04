@@ -34,7 +34,9 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-
+    /**
+     * 查询
+     * */
     public User findOne(Integer id){
         return userRepository.findOne(id);
     }
@@ -47,6 +49,18 @@ public class UserService {
     public User findByEmail(String email){
         return userRepository.findByEmail(email);
     }
+
+    /**
+     * 更新和新增
+     * @param user
+     * @return
+     */
+    public User updateUser(User user){
+       User result = userRepository.saveAndFlush(user);
+       return result;
+    }
+
+
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public int updateLastNameByid(Integer id,String lastName){
         return userRepository.updateLastNameByid(id,lastName);
@@ -54,7 +68,10 @@ public class UserService {
     public List<User> findByLastNameAndEmailNotNullOrderByIdAsc(String LastName){
         return userRepository.findByLastNameAndEmailNotNullOrderByIdAsc(LastName);
     }
-
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+    public void deleteByEmailAndLastName(String Email,String LastName){
+       userRepository.deleteByEmailAndAndLastName(Email,LastName);
+    }
     public Map getPage( Map searchParameters){
         //初始化数据
         Map map = new HashMap();
@@ -102,13 +119,16 @@ public class UserService {
             Sort sort = new Sort(Direction.ASC, "id");
             pageable = new PageRequest(page, size, sort);
         }
+        //获取查询条件
         Map filter = (Map) searchParameters.get("filter");
+        //判断是否有条件
         if (filter != null) {
             List<Map> filters = (List<Map>) filter.get("filters");
             Specification<User> specification = new Specification<User>() {
                 @Override
                 public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                     List<Predicate> predicates = new ArrayList<Predicate>();
+                    //添加条件到语句
                     for (Map m:filters) {
                         String field = m.get("field").toString().trim();
                         String value = m.get("value").toString().trim();
