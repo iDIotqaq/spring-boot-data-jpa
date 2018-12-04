@@ -22,6 +22,13 @@ public interface UserRepository extends JpaRepository<User,Integer>, JpaSpecific
     @Query("update User set lastName=:lastName where id=:id")
     int updateLastNameByid(@Param("id") Integer id,@Param("lastName") String lastName);
 
+    @Query("select u from User u where u.lastName=:LastName")
+    User searchUserByLastName(@Param("LastName") String LastName);
+
+    @Modifying
+    @Query("delete from User where lastName=:LastName ")
+    void deleteUserByLastName(@Param("LastName") String LastName);
+
     List<User> findByLastNameAndEmailNotNullOrderByIdAsc(String LastName);
 
 

@@ -54,6 +54,11 @@ public class SpringBootDataJpaApplicationTests {
         System.out.println(user);
     }
     @Test
+    public void searchUserByLastName(){
+        User user = userService.searchUserByLastName("zhangsan");
+        System.out.println(user);
+    }
+    @Test
     public void updateUser(){
         User user= userService.findOne(4);
         user.setLastName("gouye");
@@ -74,9 +79,17 @@ public class SpringBootDataJpaApplicationTests {
         System.out.println(result);
     }
     @Test
+    public void deleteById(){
+        userService.deleteById(18);
+    }
+    @Test
     public void deleteByEmailAndLastName(){
         userService.deleteByEmailAndLastName("ff","ff");
 
+    }
+    @Test
+    public void deleteUserByLastName(){
+        userService.deleteUserByLastName("wcx");
     }
     @Test
     public void findByLastNameAndEmailNotNullOrderByIdDesc(){

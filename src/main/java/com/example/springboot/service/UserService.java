@@ -49,7 +49,9 @@ public class UserService {
     public User findByEmail(String email){
         return userRepository.findByEmail(email);
     }
-
+    public User searchUserByLastName(String LastName){
+       return  userRepository.searchUserByLastName(LastName);
+    }
     /**
      * 更新和新增
      * @param user
@@ -68,10 +70,29 @@ public class UserService {
     public List<User> findByLastNameAndEmailNotNullOrderByIdAsc(String LastName){
         return userRepository.findByLastNameAndEmailNotNullOrderByIdAsc(LastName);
     }
+
+    /**
+     * 删除
+     * @param Email
+     * @param LastName
+     */
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void deleteByEmailAndLastName(String Email,String LastName){
        userRepository.deleteByEmailAndAndLastName(Email,LastName);
     }
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+    public void deleteById(Integer id){
+        userRepository.delete(id);
+    }
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+    public void deleteUserByLastName(String LastName){
+        userRepository.deleteUserByLastName(LastName);
+    }
+    /**
+     * 分页
+     * @param searchParameters
+     * @return
+     */
     public Map getPage( Map searchParameters){
         //初始化数据
         Map map = new HashMap();
