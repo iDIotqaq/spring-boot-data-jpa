@@ -4,11 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-/**
- * @Author: zxx
- * @Date: 2018/11/29 20:35
- * @Version 1.0
- */
+
 @Entity
 @Table(name="tbl_user")
 @Data

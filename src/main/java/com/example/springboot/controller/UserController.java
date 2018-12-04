@@ -16,11 +16,6 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.util.List;
 
-/**
- * @Author: zxx
- * @Date: 2018/11/29 20:46
- * @Version 1.0
- */
 @RestController
 public class UserController {
     @Autowired

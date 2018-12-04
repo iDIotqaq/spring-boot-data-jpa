@@ -10,11 +10,6 @@ import org.springframework.data.repository.query.Param;
 import javax.transaction.Transactional;
 import java.util.List;
 
-/**
- * @Author: zxx
- * @Date: 2018/11/29 20:41
- * @Version 1.0
- */
 public interface UserRepository extends JpaRepository<User,Integer>, JpaSpecificationExecutor<User> {
     User findByEmail(String Email);
     void deleteByEmailAndAndLastName(String Email,String LastName);
